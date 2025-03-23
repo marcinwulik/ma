@@ -40,6 +40,40 @@
     <button onclick="saveContent()">Zapisz</button>
     <button onclick="closeEditor()">Zamknij</button>
   </div>
+  
+<body>
+  <!-- Pasek nawigacyjny -->
+  <nav id="navLinks">
+    <!-- Linki do sekcji 1-21 -->
+    <!-- Dodaj linki do nowych sekcji -->
+    <a href="#" id="dwa" onclick="openSection(22)">22</a>
+    <a href="#" id="dwa" onclick="openSection(23)">23</a>
+   
+  </nav>
+  
+
+  <!-- Kontenery dla sekcji 22 i 23 -->
+  <div id="section22" class="section">
+    <h2>Sekcja 22</h2>
+    <form id="uploadForm22" onsubmit="uploadFile(event, 22)">
+      <input type="file" id="fileInput22" required>
+      <button type="submit">Prześlij plik</button>
+    </form>
+    <ul id="fileList22"></ul>
+  </div>
+
+  <div id="section23" class="section">
+    <h2>Sekcja 23</h2>
+    <form id="uploadForm23" onsubmit="uploadFile(event, 23)">
+      <input type="file" id="fileInput23" required>
+      <button type="submit">Prześlij plik</button>
+    </form>
+    <ul id="fileList23"></ul>
+  </div>
+
+  <!-- Skrypty JavaScript -->
+  <script src="script.js"></script>
+</body>
 
   <script>
     // Generujemy 21 linków w pasku nawigacyjnym

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Notatnik z 20 sekcjami</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .section {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            width: calc(20% - 12px);
+            box-sizing: border-box;
+        }
+        .section h2 {
+            font-size: 16px;
+            margin-top: 0;
+        }
+        .section textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+        .section input[type="file"] {
+            margin-bottom: 10px;
+        }
+        .section img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Notatnik z 20 sekcjami</h1>
+    <div class="container">
+        <!-- Sekcje będą generowane przez JavaScript -->
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.querySelector('.container');
+
+            for (let i = 1; i <= 20; i++) {
+                const section = document.createElement('div');
+                section.className = 'section';
+                section.innerHTML = `
+                    <h2>Sekcja ${i}</h2>
+                    <textarea id="text${i}" placeholder="Wprowadź tekst..."></textarea>
+                    <br>
+                    <input type="file" id="file${i}">
+                    <div id="preview${i}"></div>
+                `;
+                container.appendChild(section);
+
+                const textarea = section.querySelector(`#text${i}`);
+                const fileInput = section.querySelector(`#file${i}`);
+                const preview = section.querySelector(`#preview${i}`);
+
+                // Wczytaj zapisany tekst z LocalStorage
+                const savedText = localStorage.getItem(`text${i}`);
+                if (savedText) {
+                    textarea.value = savedText;
+                }
+
+                // Wczytaj zapisany obrazek z LocalStorage
+                const savedImage = localStorage.getItem(`image${i}`);
+                if (savedImage) {
+                    const img = document.createElement('img');
+                    img.src = savedImage;
+                    preview.appendChild(img);
+                }
+
+                // Zapisz tekst do LocalStorage przy każdej zmianie
+                textarea.addEventListener('input', () => {
+                    localStorage.setItem(`text${i}`, textarea.value);
+                });
+
+                // Obsługa przesyłania pliku
+                fileInput.addEventListener('change', (event) => {
+                    const file = event.target.files[0];
+                    if (file && file.type.startsWith('image/')) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            const img = document.createElement('img');
+                            img.src = e.target.result;
+                            preview.innerHTML = '';
+                            preview.appendChild(img);
+                            // Zapisz obrazek w LocalStorage
+                            localStorage.setItem(`image${i}`, e.target.result);
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        alert('Proszę wybrać plik graficzny.');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

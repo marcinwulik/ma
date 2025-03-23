@@ -2,111 +2,159 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Notatnik z 20 sekcjami</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        nav {
+            background-color: #333;
+            overflow: hidden;
+        }
+        nav a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            padding: 14px 20px;
+            text-decoration: none;
+            text-align: center;
+        }
+        nav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .content {
             padding: 20px;
         }
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
         .section {
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            display: none;
+            margin-bottom: 20px;
+        }
+        .section.active {
+            display: block;
+        }
+        .full-screen-editor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            box-sizing: border-box;
+            z-index: 1000;
+            display: none;
+        }
+        .full-screen-editor textarea {
+            width: 100%;
+            height: 80%;
+            background-color: #333;
+            color: white;
+            border: none;
             padding: 10px;
-            width: calc(20% - 12px);
             box-sizing: border-box;
         }
-        .section h2 {
-            font-size: 16px;
-            margin-top: 0;
+        .full-screen-editor button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
         }
-        .section textarea {
-            width: 100%;
-            height: 100px;
-            margin-bottom: 10px;
+        .full-screen-editor button:hover {
+            background-color: #45a049;
         }
-        .section input[type="file"] {
-            margin-bottom: 10px;
+        .image-section {
+            text-align: center;
+            margin-top: 20px;
         }
-        .section img {
+        .image-section img {
             max-width: 100%;
             height: auto;
-            display: block;
-            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-    <h1>Notatnik z 20 sekcjami</h1>
-    <div class="container">
-        <!-- Sekcje będą generowane przez JavaScript -->
+
+<nav>
+    <a href="#section1">Sekcja 1</a>
+    <a href="#section2">Sekcja 2</a>
+    <a href="#section3">Sekcja 3</a>
+    <a href="#section4">Sekcja 4</a>
+    <a href="#section5">Sekcja 5</a>
+    <a href="#section6">Sekcja 6</a>
+    <a href="#section7">Sekcja 7</a>
+    <a href="#section8">Sekcja 8</a>
+    <a href="#section9">Sekcja 9</a>
+    <a href="#section10">Sekcja 10</a>
+    <a href="#section11">Sekcja 11</a>
+    <a href="#section12">Sekcja 12</a>
+    <a href="#section13">Sekcja 13</a>
+    <a href="#section14">Sekcja 14</a>
+    <a href="#section15">Sekcja 15</a>
+    <a href="#section16">Sekcja 16</a>
+    <a href="#section17">Sekcja 17</a>
+    <a href="#section18">Sekcja 18</a>
+    <a href="#section19">Sekcja 19</a>
+    <a href="#section20">Sekcja 20</a>
+</nav>
+
+<div class="content">
+    <div id="section1" class="section">
+        <h2>Sekcja 1</h2>
+        <button onclick="openEditor(1)">Edytuj</button>
+        <div id="editor1"></div>
+    </div>
+    <div id="section2" class="section">
+        <h2>Sekcja 2</h2>
+        <button onclick="openEditor(2)">Edytuj</button>
+        <div id="editor2"></div>
+    </div>
+    <!-- Dodaj kolejne sekcje w ten sam sposób -->
+    <div id="section20" class="section">
+        <h2>Sekcja 20</h2>
+        <button onclick="openEditor(20)">Edytuj</button>
+        <div id="editor20"></div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const container = document.querySelector('.container');
+    <div class="image-section">
+        <h3>Obrazek</h3>
+        <img src="kot.jpg" alt="Kot">
+    </div>
+</div>
 
-            for (let i = 1; i <= 20; i++) {
-                const section = document.createElement('div');
-                section.className = 'section';
-                section.innerHTML = `
-                    <h2>Sekcja ${i}</h2>
-                    <textarea id="text${i}" placeholder="Wprowadź tekst..."></textarea>
-                    <br>
-                    <input type="file" id="file${i}">
-                    <div id="preview${i}"></div>
-                `;
-                container.appendChild(section);
+<div id="fullScreenEditor" class="full-screen-editor">
+    <textarea id="fullScreenTextarea"></textarea>
+    <br>
+    <button onclick="saveContent()">Zapisz</button>
+    <button onclick="closeEditor()">Zamknij</button>
+</div>
 
-                const textarea = section.querySelector(`#text${i}`);
-                const fileInput = section.querySelector(`#file${i}`);
-                const preview = section.querySelector(`#preview${i}`);
+<script>
+    // Funkcja otwierająca edytor dla danej sekcji
+    function openEditor(sectionNumber) {
+        const content = localStorage.getItem('section' + sectionNumber) || '';
+        document.getElementById('fullScreenTextarea').value = content;
+        document.getElementById('fullScreenEditor').style.display = 'block';
+        document.getElementById('fullScreenTextarea').focus();
+        document.getElementById('fullScreenTextarea').setAttribute('data-section', sectionNumber);
+    }
 
-                // Wczytaj zapisany tekst z LocalStorage
-                const savedText = localStorage.getItem(`text${i}`);
-                if (savedText) {
-                    textarea.value = savedText;
-                }
+    // Funkcja zamykająca edytor
+    function closeEditor() {
+        document.getElementById('fullScreenEditor').style.display = 'none';
+    }
 
-                // Wczytaj zapisany obrazek z LocalStorage
-                const savedImage = localStorage.getItem(`image${i}`);
-                if (savedImage) {
-                    const img = document.createElement('img');
-                    img.src = savedImage;
-                    preview.appendChild(img);
-                }
-
-                // Zapisz tekst do LocalStorage przy każdej zmianie
-                textarea.addEventListener('input', () => {
-                    localStorage.setItem(`text${i}`, textarea.value);
-                });
-
-                // Obsługa przesyłania pliku
-                fileInput.addEventListener('change', (event) => {
-                    const file = event.target.files[0];
-                    if (file && file.type.startsWith('image/')) {
-                        const reader = new FileReader();
-                        reader.onload = (e) => {
-                            const img = document.createElement('img');
-                            img.src = e.target.result;
-                            preview.innerHTML = '';
-                            preview.appendChild(img);
-                            // Zapisz obrazek w LocalStorage
-                            localStorage.setItem(`image${i}`, e.target.result);
-                        };
-                        reader.readAsDataURL(file);
-                    } else {
-                        alert('Proszę wybrać plik graficzny.');
-                    }
-                });
-            }
-        });
-    </script>
-</body>
-</html>
+    // Funkcja zapisująca zawartość edytora
+    function saveContent() {
+        const sectionNumber = document.getElementById('fullScreenTextarea').getAttribute('data-section');
+        const content = document.getElementById('fullScreenTextarea').value;
+        localStorage.setItem('section' + sectionNumber, content);
+        document.getElement
+::contentReference[oaicite:8]{index=8}
+ 

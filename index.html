@@ -1,160 +1,163 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notatnik z 20 sekcjami</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-            margin: 0;
-            padding: 0;
-        }
-        nav {
-            background-color: #333;
-            overflow: hidden;
-        }
-        nav a {
-            float: left;
-            display: block;
-            color: #f2f2f2;
-            padding: 14px 20px;
-            text-decoration: none;
-            text-align: center;
-        }
-        nav a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-        .content {
-            padding: 20px;
-        }
-        .section {
-            display: none;
-            margin-bottom: 20px;
-        }
-        .section.active {
-            display: block;
-        }
-        .full-screen-editor {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 20px;
-            box-sizing: border-box;
-            z-index: 1000;
-            display: none;
-        }
-        .full-screen-editor textarea {
-            width: 100%;
-            height: 80%;
-            background-color: #333;
-            color: white;
-            border: none;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-        .full-screen-editor button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-        }
-        .full-screen-editor button:hover {
-            background-color: #45a049;
-        }
-        .image-section {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .image-section img {
-            max-width: 100%;
-            height: auto;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notatnik - 20 sekcji</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+    nav {
+      background: #333;
+      padding: 10px;
+      text-align: center;
+    }
+    nav a {
+      display: inline-block;
+      color: #f2f2f2;
+      text-decoration: none;
+      margin: 5px 10px;
+      padding: 8px 12px;
+      background: #555;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+    nav a:hover {
+      background: #777;
+    }
+    .image-section {
+      text-align: center;
+      margin: 20px auto;
+    }
+    .image-section img {
+      max-width: 150px;
+      height: auto;
+      border: 2px solid #333;
+      border-radius: 5px;
+    }
+    /* Pełnoekranowy edytor */
+    .full-screen-editor {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      z-index: 1000;
+      padding: 20px;
+      box-sizing: border-box;
+      color: #fff;
+    }
+    .full-screen-editor h2 {
+      margin-top: 0;
+    }
+    .full-screen-editor textarea {
+      width: 100%;
+      height: 70%;
+      background: #222;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      box-sizing: border-box;
+      font-family: monospace;
+      font-size: 16px;
+      resize: none;
+    }
+    .full-screen-editor button {
+      background: #4CAF50;
+      border: none;
+      color: #fff;
+      padding: 10px 20px;
+      margin: 10px 5px 0 0;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .full-screen-editor button:hover {
+      background: #45a049;
+    }
+  </style>
 </head>
 <body>
 
 <nav>
-    <a href="#section1">Sekcja 1</a>
-    <a href="#section2">Sekcja 2</a>
-    <a href="#section3">Sekcja 3</a>
-    <a href="#section4">Sekcja 4</a>
-    <a href="#section5">Sekcja 5</a>
-    <a href="#section6">Sekcja 6</a>
-    <a href="#section7">Sekcja 7</a>
-    <a href="#section8">Sekcja 8</a>
-    <a href="#section9">Sekcja 9</a>
-    <a href="#section10">Sekcja 10</a>
-    <a href="#section11">Sekcja 11</a>
-    <a href="#section12">Sekcja 12</a>
-    <a href="#section13">Sekcja 13</a>
-    <a href="#section14">Sekcja 14</a>
-    <a href="#section15">Sekcja 15</a>
-    <a href="#section16">Sekcja 16</a>
-    <a href="#section17">Sekcja 17</a>
-    <a href="#section18">Sekcja 18</a>
-    <a href="#section19">Sekcja 19</a>
-    <a href="#section20">Sekcja 20</a>
+  <!-- Generujemy 20 linków -->
+  <span id="navLinks"></span>
 </nav>
 
-<div class="content">
-    <div id="section1" class="section">
-        <h2>Sekcja 1</h2>
-        <button onclick="openEditor(1)">Edytuj</button>
-        <div id="editor1"></div>
-    </div>
-    <div id="section2" class="section">
-        <h2>Sekcja 2</h2>
-        <button onclick="openEditor(2)">Edytuj</button>
-        <div id="editor2"></div>
-    </div>
-    <!-- Dodaj kolejne sekcje w ten sam sposób -->
-    <div id="section20" class="section">
-        <h2>Sekcja 20</h2>
-        <button onclick="openEditor(20)">Edytuj</button>
-        <div id="editor20"></div>
-    </div>
-
-    <div class="image-section">
-        <h3>Obrazek</h3>
-        <img src="kot.jpg" alt="Kot">
-    </div>
+<div class="image-section">
+  <h3>Obrazek</h3>
+  <img src="kot.jpg" alt="Kot">
 </div>
 
+<!-- Pełnoekranowy edytor -->
 <div id="fullScreenEditor" class="full-screen-editor">
-    <textarea id="fullScreenTextarea"></textarea>
-    <br>
-    <button onclick="saveContent()">Zapisz</button>
-    <button onclick="closeEditor()">Zamknij</button>
+  <h2 id="editorTitle">Edytor sekcji</h2>
+  <textarea id="editorTextarea"></textarea>
+  <br>
+  <button onclick="saveContent()">Zapisz</button>
+  <button onclick="closeEditor()">Zamknij</button>
 </div>
 
 <script>
-    // Funkcja otwierająca edytor dla danej sekcji
-    function openEditor(sectionNumber) {
-        const content = localStorage.getItem('section' + sectionNumber) || '';
-        document.getElementById('fullScreenTextarea').value = content;
-        document.getElementById('fullScreenEditor').style.display = 'block';
-        document.getElementById('fullScreenTextarea').focus();
-        document.getElementById('fullScreenTextarea').setAttribute('data-section', sectionNumber);
-    }
+  // Tworzymy 20 linków do sekcji
+  const navLinksContainer = document.getElementById('navLinks');
+  for(let i = 1; i <= 20; i++){
+    const link = document.createElement('a');
+    link.href = "#";
+    link.textContent = i;
+    link.addEventListener('click', function(e){
+      e.preventDefault();
+      openEditor(i);
+    });
+    navLinksContainer.appendChild(link);
+  }
 
-    // Funkcja zamykająca edytor
-    function closeEditor() {
-        document.getElementById('fullScreenEditor').style.display = 'none';
-    }
+  // Otwiera edytor dla danej sekcji
+  function openEditor(sectionNumber){
+    const editor = document.getElementById('fullScreenEditor');
+    const textarea = document.getElementById('editorTextarea');
+    const title = document.getElementById('editorTitle');
+    title.textContent = "Edytor sekcji " + sectionNumber;
+    // Wczytaj zawartość z localStorage, jeśli istnieje
+    const content = localStorage.getItem('section' + sectionNumber) || "";
+    textarea.value = content;
+    textarea.setAttribute('data-section', sectionNumber);
+    editor.style.display = 'block';
+    textarea.focus();
+  }
 
-    // Funkcja zapisująca zawartość edytora
-    function saveContent() {
-        const sectionNumber = document.getElementById('fullScreenTextarea').getAttribute('data-section');
-        const content = document.getElementById('fullScreenTextarea').value;
-        localStorage.setItem('section' + sectionNumber, content);
-        document.getElement
-::contentReference[oaicite:8]{index=8}
- 
+  // Zamknięcie edytora
+  function closeEditor(){
+    document.getElementById('fullScreenEditor').style.display = 'none';
+  }
+
+  // Zapisanie zawartości edytora do localStorage
+  function saveContent(){
+    const textarea = document.getElementById('editorTextarea');
+    const sectionNumber = textarea.getAttribute('data-section');
+    localStorage.setItem('section' + sectionNumber, textarea.value);
+    alert("Zapisano zawartość sekcji " + sectionNumber);
+    closeEditor();
+  }
+
+  // Obsługa klawisza Tab w polu tekstowym
+  document.getElementById('editorTextarea').addEventListener('keydown', function(e) {
+    if(e.key === 'Tab') {
+      e.preventDefault();
+      let start = this.selectionStart;
+      let end = this.selectionEnd;
+      // Wstawienie znaku tabulacji (tutaj "\t")
+      this.value = this.value.substring(0, start) + "\t" + this.value.substring(end);
+      // Ustawienie kursora po wstawionej tabulacji
+      this.selectionStart = this.selectionEnd = start + 1;
+    }
+  });
+</script>
+
+</body>
+</html>

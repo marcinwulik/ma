@@ -109,3 +109,33 @@
     .full-screen-editor button:hover {
       background: #45a049;
     }
+    
+   
+    
+/* Stylizacja sekcji */
+.section {
+  display: none;
+  padding: 20px;
+  background-color: #f9f9f9;
+  margin: 10px 0;
+}
+
+/* Stylizacja aktywnej sekcji */
+.section.active {
+  display: block;
+  border: 2px solid red;
+}
+
+/* Stylizacja listy plików */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin: 5px 0;
+}
+
+#dwa {
+  color: red;
+}

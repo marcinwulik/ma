@@ -1,0 +1,111 @@
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+    nav {
+      background: #333;
+      padding: 10px;
+      text-align: center;
+    }
+    nav a {
+      display: inline-block;
+      color: #f2f2f2;
+      text-decoration: none;
+      margin: 5px 10px;
+      padding: 8px 12px;
+      background: #555;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+    nav a:hover {
+      background: #777;
+    }
+    .image-section {
+      text-align: center;
+      margin: 20px auto;
+    }
+    .image-section img {
+      max-width: 150px;
+      height: auto;
+      border: 2px solid #333;
+      border-radius: 5px;
+    }
+    .email-container {
+      text-align: center;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      border-top: 1px solid #ccc;
+    }
+    .email-container input[type="email"],
+    .email-container textarea {
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 10px;
+      width: 250px;
+      box-sizing: border-box;
+    }
+    .email-container textarea {
+      height: 100px;
+      resize: vertical;
+    }
+    .email-container button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+    .email-container button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+    .email-container button:hover:not(:disabled) {
+      background-color: #45a049;
+    }
+    .full-screen-editor {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      z-index: 1000;
+      padding: 20px;
+      box-sizing: border-box;
+      color: #fff;
+    }
+    .full-screen-editor h2 {
+      margin-top: 0;
+    }
+    .full-screen-editor textarea {
+      width: 100%;
+      height: 70%;
+      background: #222;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      box-sizing: border-box;
+      font-family: monospace;
+      font-size: 16px;
+      resize: none;
+    }
+    .full-screen-editor button {
+      background: #4CAF50;
+      border: none;
+      color: #fff;
+      padding: 10px 20px;
+      margin: 10px 5px 0 0;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .full-screen-editor button:hover {
+      background: #45a049;
+    }

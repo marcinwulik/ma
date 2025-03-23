@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="kod.css">
+  <title>Notatnik - 21 sekcji z wysyłką maila</title>
+   <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+   
+
+
+    <script type="text/javascript">
+    (function(){
+    emailjs.init({
+        publicKey: "aT2n-UsoDKq0ly-PM",
+    });
+    })();
+    </script>
+    <script src="script.js"> </script>
+
+  
+ 
+</head>
+<body>
+
+    
+ <!-- Pasek nawigacyjny z 21 linkami -->
+ <nav id="navLinks">
+    <!-- Linki generowane przez JavaScript -->
+  </nav>
+
+
+  <!-- Pełnoekranowy edytor (modal) -->
+  <div id="fullScreenEditor" class="full-screen-editor">
+    <h2 id="editorTitle">Edytor sekcji</h2>
+    <textarea id="editorTextarea"></textarea>
+    <br>
+    <button onclick="saveContent()">Zapisz</button>
+    <button onclick="closeEditor()">Zamknij</button>
+  </div>
+
+  <script>
+    // Generujemy 21 linków w pasku nawigacyjnym
+    const navLinksContainer = document.getElementById('navLinks');
+    for (let i = 1; i <= 21; i++) {
+      const link = document.createElement('a');
+      link.href = "#";
+      link.textContent = ` ${i}`;
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        openEditor(i);
+      });
+      navLinksContainer.appendChild(link);
+    }
+
+    // Otwiera pełnoekranowy edytor dla danej sekcji
+    function openEditor(sectionNumber) {
+      const editor = document.getElementById('fullScreenEditor');
+      const textarea = document.getElementById('editorTextarea');
+      const title = document.getElementById('editorTitle');
+      title.textContent = `Edytor sekcji ${sectionNumber}`;
+      // Wczytujemy zawartość danej sekcji z localStorage (jeśli istnieje)
+      const content = localStorage.getItem('section' + sectionNumber) || "";
+      textarea.value = content;
+      textarea.setAttribute('data-section', sectionNumber);
+      editor.style.display = 'block';
+      textarea.focus();
+    }
+
+    // Zamykamy edytor
+    function closeEditor() {
+      document.getElementById('fullScreenEditor').style.display = 'none';
+    }
+
+    // Zapisujemy zawartość edytora do localStorage
+    function saveContent() {
+      const textarea = document.getElementById('editorTextarea');
+      const sectionNumber = textarea.getAttribute('data-section');
+      localStorage.setItem('section' + sectionNumber, textarea.value);
+      alert(`Zapisano zawartość sekcji ${sectionNumber}`);
+      closeEditor();
+    }
+
+    // Obsługa klawisza Tab w polu tekstowym edytora
+    document.getElementById('editorTextarea').addEventListener('keydown', function(e) {
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        let start = this.selectionStart;
+        let end = this.selectionEnd;
+        // Wstawienie znaku tabulacji
+        this.value = this.value.substring(0, start) + "\t" + this.value.substring(end);
+        this.selectionStart = this.selectionEnd = start + 1;
+      }
+    });
+  </script>
+
+
+<div class="email-container">
+  <h3>Wyślij zawwwartość sekcji 21 na maila</h3>
+  <input type="email" id="user_email" placeholder="Wpisz swój email" required>
+  <br>
+  <textarea id="additionalText" placeholder="Opcjonalny dodatkowy tekst"></textarea>
+  <br>
+  <button onclick="sendMail()">Wyślij</button>
+</div>
+
+<div id="fullScreenEditor" class="full-screen-editor">
+  <h2 id="editorTitle">Edytor sekcji</h2>
+  <textarea id="editorTextarea"></textarea>
+  <br>
+  <button >Zapisz</button>
+  <button     onclick="closeEditor()">Zamknij</button>
+</div>
+<script type="text/javascript" src="script.js"></script>
+
+ <!-- Sekcja z obrazkiem (kot.jpg) -->
+ <div class="image-section">
+    <h3>Obrazek</h3>
+    <img src="kot.jpg" alt="Kot">
+  </div>
+
+
+</body>
+</html>
